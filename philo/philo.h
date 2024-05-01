@@ -18,7 +18,6 @@ typedef struct s_data
 	long			time_to_sleep;
 	long			nb_of_time_philo_eat;
 	bool			dead;
-	bool			finish_eating;
 	bool			*forks;
 	pthread_mutex_t	*m_forks;
 	pthread_mutex_t	m_dead;
@@ -39,6 +38,7 @@ typedef struct s_list
 	bool			think;
 	long			philo_nb;
 	long			nb_of_eat;
+	bool			finish_eating;
 	t_data			*data;
 	useconds_t		die_at;
 	struct s_list	*next;

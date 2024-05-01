@@ -7,8 +7,13 @@ int	take_left_fork(t_list *philo)
 	pthread_mutex_lock(philo->left_fork);
 	*philo->left_fork_is_taken = true;
 	pthread_mutex_unlock(philo->left_fork);
-	printf("%u %ld has taken a fork\n", \
-	get_time(philo->data->time), philo->philo_nb);
+	pthread_mutex_lock(&philo->data->m_print);
+	if (!philo->data->dead)
+	{
+		printf("%u %ld has taken a fork\n", \
+		get_time(philo->data->time), philo->philo_nb);
+	}
+	pthread_mutex_unlock(&philo->data->m_print);
 	return (1);
 }
 
@@ -19,8 +24,13 @@ int	take_right_fork(t_list *philo)
 	pthread_mutex_lock(philo->right_fork);
 	*philo->right_fork_is_taken = true;
 	pthread_mutex_unlock(philo->right_fork);
-	printf("%u %ld has taken a fork\n", \
-	get_time(philo->data->time), philo->philo_nb);
+	pthread_mutex_lock(&philo->data->m_print);
+	if (!philo->data->dead)
+	{
+		printf("%u %ld has taken a fork\n", \
+		get_time(philo->data->time), philo->philo_nb);
+	}
+	pthread_mutex_unlock(&philo->data->m_print);
 	return (1);
 }
 

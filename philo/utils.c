@@ -12,7 +12,7 @@ bool	is_finish(t_list *philo)
 {
 	useconds_t		current_time;
 
-	if (philo->data->dead || philo->data->finish_eating)
+	if (philo->data->dead || philo->finish_eating)
 		return (true);
 	current_time = get_time(philo->data->time);
 	if (current_time >= philo->die_at)

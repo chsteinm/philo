@@ -27,16 +27,14 @@ void	*routine(void *arg)
 		philo->think = false;
 		if (philo->philo_nb % 2)
 		{
-			take_left_fork_or_think(philo);
 			take_right_fork_or_think(philo);
+			take_left_fork_or_think(philo);
 		}
 		else
 		{
-			take_right_fork_or_think(philo);
 			take_left_fork_or_think(philo);
+			take_right_fork_or_think(philo);
 		}
-		if (is_finish(philo))
-			return (NULL);
 		print_and_eat(philo);
 		philo->die_at = get_time(philo->data->time) + philo->data->time_to_die;
 		print_and_sleep(philo);

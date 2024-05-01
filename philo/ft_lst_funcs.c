@@ -20,6 +20,7 @@ t_list	*ft_lstnew(t_data *data, long philo_nb)
 	new->philo_nb = philo_nb;
 	new->data = data;
 	new->nb_of_eat = new->data->nb_of_time_philo_eat;
+	new->finish_eating = false;
 	new->think = false;
 	new->next = NULL;
 	new->prev = NULL;
