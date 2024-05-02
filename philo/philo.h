@@ -6,6 +6,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <sys/types.h>
 # include <pthread.h>
 # include <stdbool.h>
 # include <limits.h>
@@ -22,6 +23,8 @@ typedef struct s_data
 	pthread_mutex_t	*m_forks;
 	pthread_mutex_t	m_dead;
 	bool			m_dead_to_destroy;
+	pthread_mutex_t	m_start;
+	bool			m_start_to_destroy;
 	pthread_mutex_t	m_print;
 	bool			m_print_to_destroy;
 	pthread_t		*th;
@@ -66,5 +69,7 @@ void	print_and_eat(t_list *philo);
 
 useconds_t	get_time(useconds_t start);
 bool		is_finish(t_list *philo);
+bool		is_dead(t_list *philo);
+void		ft_usleep(useconds_t to_sleep);
 
 #endif
