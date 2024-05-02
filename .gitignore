@@ -1,0 +1,5 @@
+/philo/.build
+/philo/out
+/philo/philo
+/philo/Lazy*
+.vscode

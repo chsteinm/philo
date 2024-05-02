@@ -27,9 +27,12 @@ void	print_and_eat(t_list *philo)
 	ft_usleep(philo->data->time_to_eat);
 	if (philo->data->nb_of_time_philo_eat && --philo->nb_of_eat == 0)
 		philo->finish_eating = true;
+	//pthread_mutex_lock(philo->right_fork);
 	*philo->right_fork_is_taken = false;
+	//pthread_mutex_unlock(philo->right_fork);
+	//pthread_mutex_lock(philo->left_fork);
 	*philo->left_fork_is_taken = false;
-
+	//pthread_mutex_unlock(philo->left_fork);
 }
 
 void	print_and_think(t_list *philo)
