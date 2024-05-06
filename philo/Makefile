@@ -1,7 +1,7 @@
 NAME = philo_bonus
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread -g3 #-fsanitize=address
-SRCS = main.c ft_strtol_utils.c ft_lst_funcs.c ft_strtol.c
+CFLAGS = -Wall -Wextra -Werror -pthread #-g3 -fsanitize=thread
+SRCS = main.c ft_strtol_utils.c ft_lst_funcs.c ft_strtol.c init.c print_and.c take_fork.c utils.c
 OBJ = $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
 BUILD_DIR = .build
 

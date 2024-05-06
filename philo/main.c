@@ -3,7 +3,7 @@
 void	free_and_destroy(t_data *data, t_list **philo)
 {
 	while (data->nb_of_philo--)
-		pthread_join(data->th[data->nb_of_philo], NULL);
+		pthread_join(data->th[data->nb_of_philo], NULL); // secu les join ?
 	free(data->th);
 	ft_lstclear(philo);
 	while (data->i--)
@@ -14,6 +14,16 @@ void	free_and_destroy(t_data *data, t_list **philo)
 		pthread_mutex_destroy(&data->m_dead);
 	if (data->m_print_to_destroy == true)
 		pthread_mutex_destroy(&data->m_print);
+	if (data->m_start_to_destroy == true)
+		pthread_mutex_destroy(&data->m_start);
+}
+
+void	wait_n_desync(t_list *philo)
+{
+	pthread_mutex_lock(&philo->data->m_start);
+	pthread_mutex_unlock(&philo->data->m_start);
+	if (!(philo->philo_nb % 2))
+		ft_usleep(10);
 }
 
 void	*routine(void *arg)
@@ -21,6 +31,7 @@ void	*routine(void *arg)
 	t_list	*philo;
 
 	philo = (t_list *)arg;
+	wait_n_desync(philo);
 	philo->die_at = get_time(philo->data->time) + philo->data->time_to_die;
 	while (!is_finish(philo))
 	{
@@ -42,12 +53,30 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
+int	lauch_threads(t_data *data, t_list *philo_ptr)
+{
+	long		i;
+
+	i = -1;
+	pthread_mutex_lock(&data->m_start);
+	while (++i < data->nb_of_philo)
+	{
+		if (pthread_create(data->th + i, NULL, &routine, philo_ptr))
+		{
+			pthread_mutex_unlock(&data->m_start);
+			return (EXIT_FAILURE);
+		}
+		philo_ptr = philo_ptr->next;
+		ft_usleep(10);
+	}
+	pthread_mutex_unlock(&data->m_start);
+	return (EXIT_SUCCESS);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data		data;
 	t_list		*philo;
-	t_list		*philo_ptr;
-	long		i;
 
 	if (argc < 5 || argc > 6)
 		return (EXIT_FAILURE);
@@ -59,14 +88,8 @@ int	main(int argc, char **argv)
 	data.th = malloc(data.nb_of_philo * sizeof(pthread_t));
 	if (!data.th)
 		return (free_and_destroy(&data, &philo), EXIT_FAILURE);
-	i = -1;
-	philo_ptr = philo;
-	while (++i < data.nb_of_philo)
-	{
-		if (pthread_create(data.th + i, NULL, &routine, philo_ptr))
-				return (free_and_destroy(&data, &philo), EXIT_FAILURE);
-		philo_ptr = philo_ptr->next;
-	}
+	if (lauch_threads(&data, philo) == EXIT_FAILURE)
+		return (free_and_destroy(&data, &philo), EXIT_FAILURE);
 	free_and_destroy(&data, &philo);
 	return (EXIT_SUCCESS);
 }

@@ -62,6 +62,9 @@ int	init_mutex(t_data *data)
 	if (pthread_mutex_init(&data->m_print, NULL) != 0)
 			return (EXIT_FAILURE);
 	data->m_print_to_destroy = true;
+	if (pthread_mutex_init(&data->m_start, NULL) != 0)
+			return (EXIT_FAILURE);
+	data->m_start_to_destroy = true;
 	return (EXIT_SUCCESS);
 }
 
