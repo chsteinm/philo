@@ -1,5 +1,5 @@
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <stdio.h>
 # include <string.h>
@@ -10,6 +10,13 @@
 # include <semaphore.h>
 # include <stdbool.h>
 # include <limits.h>
+# include <fcntl.h>
+
+# define S_FORKS "forks"
+# define S_DEAD "dead"
+# define S_IS_DEAD "is_dead"
+# define S_PRINT "print"
+# define S_START "start"
 
 typedef struct s_data
 {
@@ -19,22 +26,27 @@ typedef struct s_data
 	long			time_to_sleep;
 	long			nb_of_time_philo_eat;
 	sem_t			*s_forks;
-	long			nb_s_forks_to_destroy;
-	sem_t			s_dead;
+	bool			s_forks_to_destroy;
+	sem_t			*s_dead;
 	bool			s_dead_to_destroy;
-	sem_t			s_print;
+	sem_t			*s_print;
 	bool			s_print_to_destroy;
+	sem_t			*s_start;
+	bool			s_start_to_destroy;
 	pid_t			*pid_philo;
 	useconds_t		time;
 }					t_data;
 
 typedef struct s_list
 {
-	pthread_t		th;
+	pthread_t		th_dead;
+	pthread_t		th_fork;
 	bool			think;
 	long			philo_nb;
 	long			nb_of_eat;
-	bool			dead;
+	sem_t			*s_is_dead;
+	bool			s_is_dead_to_destroy;
+	bool			is_dead;
 	bool			finish_eating;
 	t_data			*data;
 	useconds_t		die_at;
@@ -51,7 +63,7 @@ void	ft_lstclear(t_list **lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 
 int			init_data(t_data *data, char **argv);
-int			init_mutex(t_data *data);
+int			init_sem(t_data *data);
 int			init_philo(t_data *data, t_list **philo);
 useconds_t	init_time();
 

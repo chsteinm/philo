@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "philo_bonus.h"
 
 static bool	check_base(char *str, char **endptr, int base)
 {

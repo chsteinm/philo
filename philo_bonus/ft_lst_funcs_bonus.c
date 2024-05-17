@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "philo_bonus.h"
 
 t_list	*ft_lstnew(t_data *data, long philo_nb)
 {
@@ -7,13 +7,10 @@ t_list	*ft_lstnew(t_data *data, long philo_nb)
 	new = malloc(sizeof(t_list) * 1);
 	if (!new)
 		return (NULL);
+	memset((void *)new, 0, sizeof(t_list));
 	new->philo_nb = philo_nb;
 	new->data = data;
 	new->nb_of_eat = new->data->nb_of_time_philo_eat;
-	new->finish_eating = false;
-	new->think = false;
-	new->next = NULL;
-	new->prev = NULL;
 	return (new);
 }
 
@@ -39,9 +36,18 @@ void	ft_lstclear(t_list **lst)
 
 	if (!lst)
 		return ;
+	tmp = *lst;
+	while (tmp->prev)
+		tmp = tmp->prev;
+	*lst = tmp;
 	while (*lst)
 	{
 		tmp = (*lst)->next;
+		if ((*lst)->s_is_dead_to_destroy)
+		{
+			sem_close((*lst)->s_is_dead);
+			sem_unlink(S_IS_DEAD);
+		}
 		free(*lst);
 		*lst = tmp;
 	}
