@@ -8,6 +8,14 @@ t_list	*ft_lstnew(t_data *data, long philo_nb)
 	if (!new)
 		return (NULL);
 	memset((void *)new, 0, sizeof(t_list));
+	new->s_is_dead = sem_open(S_IS_DEAD, O_CREAT, 0666, 1);
+	if (new->s_is_dead == SEM_FAILED)
+		return (NULL);
+	new->s_is_dead_to_destroy = true;
+	new->s_fork = sem_open(S_FORK, O_CREAT, 0666, 1);
+	if (new->s_fork == SEM_FAILED)
+		return (NULL);
+	new->s_fork_to_destroy = true;
 	new->philo_nb = philo_nb;
 	new->data = data;
 	new->nb_of_eat = new->data->nb_of_time_philo_eat;

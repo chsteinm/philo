@@ -13,6 +13,7 @@
 # include <fcntl.h>
 
 # define S_FORKS "forks"
+# define S_FORK "fork"
 # define S_DEAD "dead"
 # define S_IS_DEAD "is_dead"
 # define S_PRINT "print"
@@ -39,14 +40,17 @@ typedef struct s_data
 
 typedef struct s_list
 {
-	pthread_t		th_dead;
-	pthread_t		th_fork;
+	pthread_t		*th_dead;
+	pthread_t		*th_fork;
 	bool			think;
 	long			philo_nb;
 	long			nb_of_eat;
 	sem_t			*s_is_dead;
 	bool			s_is_dead_to_destroy;
 	bool			is_dead;
+	sem_t			*s_fork;
+	bool			s_fork_to_destroy;
+	bool			fork_taken;
 	bool			finish_eating;
 	t_data			*data;
 	useconds_t		die_at;
@@ -67,13 +71,13 @@ int			init_sem(t_data *data);
 int			init_philo(t_data *data, t_list **philo);
 useconds_t	init_time();
 
-void	take_right_fork_or_think(t_list *philo);
-void	take_left_fork_or_think(t_list *philo);
+int		take_forks_or_think(t_list *philo);
 void	print_and_think(t_list *philo);
 void	print_and_sleep(t_list *philo);
 void	print_and_eat(t_list *philo);
 
 useconds_t	get_time(useconds_t start);
 bool		is_finish(t_list *philo);
+void		ft_usleep(useconds_t to_sleep);
 
 #endif
