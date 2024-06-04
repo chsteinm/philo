@@ -7,16 +7,15 @@ void	free_and_destroy(t_data *data, t_list **philo)
 	free(data->th);
 	ft_lstclear(philo);
 	while (data->i--)
-		sem_close(&data->m_forks[data->i]);
+		pthread_mutex_destroy(&data->m_forks[data->i]);
 	free(data->m_forks);
 	free(data->forks);
 	if (data->m_dead_to_destroy == true)
-		sem_close(&data->m_dead);
+		pthread_mutex_destroy(&data->m_dead);
 	if (data->m_print_to_destroy == true)
-		sem_close(&data->m_print);
+		pthread_mutex_destroy(&data->m_print);
 	if (data->m_start_to_destroy == true)
-		sem_close(&data->m_start);
-}
+		pthread_mutex_destroy(&data->m_start);}
 
 void	wait_n_desync(t_list *philo)
 {

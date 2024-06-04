@@ -33,6 +33,7 @@ void	*wait_dead(void *arg)
 	philo = (t_list *)arg;
 	sem_wait(philo->data->s_dead);
 	sem_post(philo->data->s_dead);
+	// sem_post(philo->data->s_dead);
 	sem_wait(philo->s_is_dead);
 	philo->is_dead = true;
 	sem_post(philo->s_is_dead);
@@ -59,6 +60,7 @@ void	routine(t_data *data, t_list *philo)
 	}
 	sem_post(philo->s_is_dead);
 	pthread_detach(philo->th_dead);
+	pthread_detach(philo->th_fork);
 	return (free_and_destroy(data, &philo), exit(ret));
 }
 
@@ -81,6 +83,10 @@ int	lauch_lunch(t_data *data, t_list *philo)
 		sem_post(data->s_start);
 	sem_wait(data->s_dead);
 	sem_post(data->s_dead);
+	printf("COUCOU\n");
+	i = -1;
+	while (++i <= data->nb_of_philo)
+		kill(data->pid_philo[i], 2);
 	return (EXIT_SUCCESS);
 }
 
