@@ -44,6 +44,7 @@ void	routine(t_data *data, t_list *philo)
 	int	ret;
 
 	ret = EXIT_SUCCESS;
+	sem_wait(data->s_start);
 	if (pthread_create(&philo->th_dead, NULL, &wait_dead, philo) != 0)
 		return (free_and_destroy(data, &philo), exit(EXIT_FAILURE));
 	philo->die_at = get_time(philo->data->time) + philo->data->time_to_die;
@@ -53,7 +54,7 @@ void	routine(t_data *data, t_list *philo)
 		ret = take_forks_or_think(philo);
 		if (ret == EXIT_FAILURE)
 			break ;
-		
+		eat_n_sleep(philo);
 		philo->die_at = get_time(philo->data->time) + philo->data->time_to_die;
 	}
 	sem_post(philo->s_is_dead);
@@ -78,6 +79,8 @@ int	lauch_lunch(t_data *data, t_list *philo)
 	i = data->nb_of_philo;
 	while (i--)
 		sem_post(data->s_start);
+	sem_wait(data->s_dead);
+	sem_post(data->s_dead);
 	return (EXIT_SUCCESS);
 }
 

@@ -6,8 +6,9 @@ SRCS = 	main_bonus.c \
 		ft_strtol.c \
 		ft_lst_funcs_bonus.c \
 		init_bonus.c \
-		utils_bonus.c 
-# take_fork_bonus.c 
+		utils_bonus.c \
+		eat_sleep_bonus.c \
+		take_fork_bonus.c
 OBJ = $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
 BUILD_DIR = .build
 

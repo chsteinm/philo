@@ -31,6 +31,9 @@ void	*take_fork(void *arg)
 	sem_wait(philo->data->s_forks);
 	if (is_finish(philo) == false)
 		print_fork(philo);
+	sem_wait(philo->data->s_forks);
+	if (is_finish(philo) == false)
+		print_fork(philo);
 	sem_wait(philo->s_fork);
 	philo->fork_taken = true;
 	sem_post(philo->s_fork);
@@ -50,11 +53,11 @@ bool	fork_is_taken(t_list *philo)
 
 int	take_forks_or_think(t_list *philo)
 {
-	if (is_finish(philo) == true)
-		return (0);
-	if (pthread_create(philo->th_dead, NULL, &take_fork, philo) != 0)
+	// if (is_finish(philo) == true)
+	// 	return (0);
+	if (pthread_create(&philo->th_fork, NULL, &take_fork, philo) != 0)
 		return (EXIT_FAILURE);
-	while (fork_is_taken == false)
+	while (fork_is_taken(philo) == false && is_finish(philo) == false)
 		if (philo->think == false)
 			print_think(philo);
 	sem_wait(philo->s_fork);
@@ -62,15 +65,15 @@ int	take_forks_or_think(t_list *philo)
 	sem_post(philo->s_fork);
 	if (pthread_join(philo->th_fork, NULL) != 0)
 		return (EXIT_FAILURE);
-	if (is_finish(philo) == true)
-		return (0);
-	if (pthread_create(philo->th_dead, NULL, &take_fork, philo) != 0)
-		return (EXIT_FAILURE);
-	while (fork_is_taken == false)
-		if (philo->think == false)
-			print_think(philo);
-	sem_wait(philo->s_fork);
-	philo->fork_taken = false;
-	sem_post(philo->s_fork);
+	// if (is_finish(philo) == true)
+	// 	return (0);
+	// if (pthread_create(&philo->th_fork, NULL, &take_fork, philo) != 0)
+	// 	return (EXIT_FAILURE);
+	// while (fork_is_taken(philo) == false)
+	// 	if (philo->think == false)
+	// 		print_think(philo);
+	// sem_wait(philo->s_fork);
+	// philo->fork_taken = false;
+	// sem_post(philo->s_fork);
 	return (EXIT_SUCCESS);
 }

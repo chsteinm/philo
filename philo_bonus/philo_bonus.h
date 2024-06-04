@@ -11,6 +11,8 @@
 # include <stdbool.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 # define S_FORKS "forks"
 # define S_FORK "fork"
@@ -40,8 +42,8 @@ typedef struct s_data
 
 typedef struct s_list
 {
-	pthread_t		*th_dead;
-	pthread_t		*th_fork;
+	pthread_t		th_dead;
+	pthread_t		th_fork;
 	bool			think;
 	long			philo_nb;
 	long			nb_of_eat;
@@ -75,6 +77,8 @@ int		take_forks_or_think(t_list *philo);
 void	print_and_think(t_list *philo);
 void	print_and_sleep(t_list *philo);
 void	print_and_eat(t_list *philo);
+
+void	eat_n_sleep(t_list *philo);
 
 useconds_t	get_time(useconds_t start);
 bool		is_finish(t_list *philo);
