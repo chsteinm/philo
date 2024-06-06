@@ -18,8 +18,7 @@ void	print_think(t_list *philo)
 
 	current_time = get_time(philo->data->time);
 	sem_wait(philo->data->s_print);
-	if (is_finish(philo) == false)
-		printf("%u %ld is thinking\n", \
+	printf("%u %ld is thinking\n", \
 	current_time, philo->philo_nb);
 	sem_post(philo->data->s_print);
 	philo->think = true;
@@ -59,6 +58,7 @@ int	take_forks_or_think(t_list *philo)
 	// 	return (EXIT_FAILURE);
 	print_think(philo);
 	sem_wait(philo->data->s_forks);
+	printf("HELOO\n");
 	print_fork(philo);
 	sem_wait(philo->data->s_forks);
 	print_fork(philo);
