@@ -6,7 +6,8 @@ void	print_fork(t_list *philo)
 
 	current_time = get_time(philo->data->time);
 	sem_wait(philo->data->s_print);
-	printf("%u %ld has taken a fork\n", \
+	if (is_finish(philo) == false)
+		printf("%u %ld has taken a fork\n", \
 	current_time, philo->philo_nb);
 	sem_post(philo->data->s_print);
 }
@@ -17,7 +18,8 @@ void	print_think(t_list *philo)
 
 	current_time = get_time(philo->data->time);
 	sem_wait(philo->data->s_print);
-	printf("%u %ld is thinking\n", \
+	if (is_finish(philo) == false)
+		printf("%u %ld is thinking\n", \
 	current_time, philo->philo_nb);
 	sem_post(philo->data->s_print);
 	philo->think = true;
@@ -29,11 +31,9 @@ void	*take_fork(void *arg)
 
 	philo = (t_list *)arg;
 	sem_wait(philo->data->s_forks);
-	if (is_finish(philo) == false)
-		print_fork(philo);
+	print_fork(philo);
 	sem_wait(philo->data->s_forks);
-	if (is_finish(philo) == false)
-		print_fork(philo);
+	print_fork(philo);
 	sem_wait(philo->s_fork);
 	philo->fork_taken = true;
 	sem_post(philo->s_fork);

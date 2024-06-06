@@ -42,6 +42,7 @@ bool	is_finish(t_list *philo)
 			sem_post(philo->data->s_dead);
 			sem_wait(philo->data->s_print);
 			printf("%u %ld died\n", current_time, philo->philo_nb);
+			// ft_usleep(50);
 			sem_post(philo->data->s_print);
 		}
 		return (true);

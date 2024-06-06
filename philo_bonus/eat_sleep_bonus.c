@@ -11,9 +11,11 @@ void	print_eat(t_list *philo)
 	sem_post(philo->data->s_print);
 	ft_usleep(philo->data->time_to_eat);
 	sem_post(philo->data->s_forks);
-	sem_post(philo->data->s_forks);
 	if (philo->data->nb_of_time_philo_eat && --philo->nb_of_eat == 0)
+	{
 		philo->finish_eating = true;
+	}
+	sem_post(philo->data->s_forks);
 }
 
 void	print_sleep(t_list *philo)

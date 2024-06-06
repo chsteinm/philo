@@ -82,6 +82,7 @@ void	eat_n_sleep(t_list *philo);
 
 useconds_t	get_time(useconds_t start);
 bool		is_finish(t_list *philo);
+bool		is_dead(t_list *philo);
 void		ft_usleep(useconds_t to_sleep);
 
 #endif
