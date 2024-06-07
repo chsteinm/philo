@@ -31,21 +31,21 @@ void	free_and_destroy(t_data *data, t_list **philo)
 	}
 }
 
-void	*wait_dead(void *arg)
-{
-	t_list	*philo;
+// void	*wait_dead(void *arg)
+// {
+// 	t_list	*philo;
 
-	philo = (t_list *)arg;
-	sem_wait(philo->data->s_dead);
-	sem_post(philo->data->s_dead);
-	sem_wait(philo->s_is_dead);
-	philo->is_dead = true;
-	sem_post(philo->s_is_dead);
-	sem_post(philo->data->s_forks);
-	sem_post(philo->data->s_forks);
-	sem_post(philo->data->s_dead);
-	return (NULL);
-}
+// 	philo = (t_list *)arg;
+// 	sem_wait(philo->data->s_dead);
+// 	sem_post(philo->data->s_dead);
+// 	sem_wait(philo->s_is_dead);
+// 	philo->is_dead = true;
+// 	sem_post(philo->s_is_dead);
+// 	sem_post(philo->data->s_forks);
+// 	sem_post(philo->data->s_forks);
+// 	sem_post(philo->data->s_dead);
+// 	return (NULL);
+// }
 
 void	routine(t_data *data, t_list *philo)
 {
@@ -60,10 +60,13 @@ void	routine(t_data *data, t_list *philo)
 		print_eat(philo);
 		philo->die_at = get_time(philo->data->time) + philo->data->time_to_die;
 		if (philo->data->nb_of_time_philo_eat && --philo->nb_of_eat == 0)
-			break ;
+		{
+			sem_post(data->s_finish);
+			// exit(0);
+			return (free_and_destroy(data, &philo), exit(0));
+		}
 		print_sleep(philo);
 	}
-	sem_post(data->s_finish);
 	// pthread_join(philo->th_dead, NULL);
 	// pthread_join(philo->th_fork, NULL);
 	// return (free_and_destroy(data, &philo), exit(ret));
@@ -110,8 +113,11 @@ int	lauch_lunch(t_data *data, t_list *philo)
 	sem_wait(data->s_dead);
 	while (++i < data->nb_of_philo)
 		sem_post(data->s_forks);
+	ft_usleep(100);
+	i = -1;
 	while (++i < data->nb_of_philo)
-		kill(data->pid_philo[i++], 2);
+		waitpid(data->pid_philo[i], NULL, 0);
+		// kill(data->pid_philo[i++], 2);
 	while (data->nb_of_philo--)
 		sem_post(data->s_finish);
 	pthread_join(data->th_finish, NULL);

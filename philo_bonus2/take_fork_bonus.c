@@ -46,7 +46,7 @@ bool	fork_is_taken(t_list *philo)
 {
 	bool	ret;
 
-	usleep(5);
+	ft_usleep(1);
 	sem_wait(philo->s_fork);
 	ret = philo->fork_taken;
 	sem_post(philo->s_fork);
@@ -63,8 +63,8 @@ void	take_forks_or_think(t_list *philo)
 		if (philo->think == false)
 			print_think(philo);
 	philo->fork_taken = false;
-	// if (pthread_join(philo->th_fork, NULL) != 0)
-	// 	return (EXIT_FAILURE);
+	if (pthread_join(philo->th_fork, NULL) != 0)
+		exit(1);
 	// if (is_finish(philo) == true)
 	// 	return (0);
 	// if (pthread_create(&philo->th_fork, NULL, &take_fork, philo) != 0)
