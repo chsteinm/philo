@@ -49,9 +49,6 @@ void	*wait_dead(void *arg)
 
 void	routine(t_data *data, t_list *philo)
 {
-	int	ret;
-
-	ret = EXIT_SUCCESS;
 	sem_wait(data->s_start);
 	// if (pthread_create(&philo->th_dead, NULL, &wait_dead, philo) != 0)
 	// 	return (free_and_destroy(data, &philo), exit(EXIT_FAILURE));
@@ -59,16 +56,17 @@ void	routine(t_data *data, t_list *philo)
 	while (is_finish(philo) == false)
 	{
 		philo->think = false;
-		ret = take_forks_or_think(philo);
-		if (ret == EXIT_FAILURE)
-			break ;
-		eat_n_sleep(philo);
+		take_forks_or_think(philo);
+		print_eat(philo);
 		philo->die_at = get_time(philo->data->time) + philo->data->time_to_die;
+		if (philo->data->nb_of_time_philo_eat && --philo->nb_of_eat == 0)
+			break ;
+		print_sleep(philo);
 	}
 	sem_post(data->s_finish);
 	// pthread_join(philo->th_dead, NULL);
 	// pthread_join(philo->th_fork, NULL);
-	return (free_and_destroy(data, &philo), exit(ret));
+	// return (free_and_destroy(data, &philo), exit(ret));
 }
 
 void	*wait_finish(void *arg)
@@ -110,10 +108,13 @@ int	lauch_lunch(t_data *data, t_list *philo)
 	if (pthread_create(&data->th_finish, NULL, &wait_finish, data) != 0)
 		return (free_and_destroy(data, &philo), exit(EXIT_FAILURE), 1);
 	sem_wait(data->s_dead);
-	while (i++ < data->nb_of_philo)
-		sem_post(data->s_finish);
+	while (++i < data->nb_of_philo)
+		sem_post(data->s_forks);
+	while (++i < data->nb_of_philo)
+		kill(data->pid_philo[i++], 2);
 	while (data->nb_of_philo--)
-		kill(data->pid_philo[i], 2);
+		sem_post(data->s_finish);
+	pthread_join(data->th_finish, NULL);
 	return (EXIT_SUCCESS);
 }
 

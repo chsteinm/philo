@@ -56,6 +56,11 @@ void	ft_lstclear(t_list **lst)
 			sem_close((*lst)->s_is_dead);
 			sem_unlink(S_IS_DEAD);
 		}
+		if ((*lst)->s_fork_to_destroy)
+		{
+			sem_close((*lst)->s_fork);
+			sem_unlink(S_FORK);
+		}
 		free(*lst);
 		*lst = tmp;
 	}

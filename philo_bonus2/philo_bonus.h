@@ -57,7 +57,6 @@ typedef struct s_list
 	sem_t			*s_fork;
 	bool			s_fork_to_destroy;
 	bool			fork_taken;
-	bool			finish_eating;
 	t_data			*data;
 	useconds_t		die_at;
 	struct s_list	*next;
@@ -77,16 +76,16 @@ int			init_sem(t_data *data);
 int			init_philo(t_data *data, t_list **philo);
 useconds_t	init_time();
 
-int		take_forks_or_think(t_list *philo);
+void	take_forks_or_think(t_list *philo);
 void	print_and_think(t_list *philo);
 void	print_and_sleep(t_list *philo);
 void	print_and_eat(t_list *philo);
 
-void	eat_n_sleep(t_list *philo);
+void	print_eat(t_list *philo);
+void	print_sleep(t_list *philo);
 
 useconds_t	get_time(useconds_t start);
 bool		is_finish(t_list *philo);
-bool		is_dead(t_list *philo);
 void		ft_usleep(useconds_t to_sleep);
 
 #endif
