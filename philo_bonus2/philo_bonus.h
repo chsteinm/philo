@@ -20,6 +20,7 @@
 # define S_IS_DEAD "is_dead"
 # define S_PRINT "print"
 # define S_START "start"
+# define S_FINISH "finish"
 
 typedef struct s_data
 {
@@ -32,6 +33,9 @@ typedef struct s_data
 	bool			s_forks_to_destroy;
 	sem_t			*s_dead;
 	bool			s_dead_to_destroy;
+	sem_t			*s_finish;
+	bool			s_finish_to_destroy;
+	pthread_t		th_finish;
 	sem_t			*s_print;
 	bool			s_print_to_destroy;
 	sem_t			*s_start;

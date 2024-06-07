@@ -47,10 +47,19 @@ int	init_data(t_data *data, char **argv)
 
 int	init_sem(t_data *data)
 {
+	sem_unlink(S_FORKS);
+	sem_unlink(S_DEAD);
+	sem_unlink(S_PRINT);
+	sem_unlink(S_START);
+	sem_unlink(S_FINISH);
 	data->s_forks = sem_open(S_FORKS, O_CREAT, 0700, data->nb_of_philo);
 	if (data->s_forks == SEM_FAILED)
 		return (EXIT_FAILURE);
 	data->s_forks_to_destroy = true;
+	data->s_finish = sem_open(S_FINISH, O_CREAT, 0700, 0);
+	if (data->s_finish == SEM_FAILED)
+		return (EXIT_FAILURE);
+	data->s_finish_to_destroy = true;
 	data->s_dead = sem_open(S_DEAD, O_CREAT, 0700, 0);
 	if (data->s_dead == SEM_FAILED)
 		return (EXIT_FAILURE);
