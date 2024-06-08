@@ -4,6 +4,8 @@ void	print_sleep(t_list *philo)
 {
 	useconds_t		current_time;
 
+	if (is_finish(philo) == true)
+		return ;
 	current_time = get_time(philo->data->time);
 	sem_wait(philo->data->s_print);
 	printf("%u %ld is sleeping\n", \
@@ -16,6 +18,8 @@ void	print_eat(t_list *philo)
 {
 	useconds_t		current_time;
 
+	if (is_finish(philo) == true)
+		return ;
 	current_time = get_time(philo->data->time);
 	sem_wait(philo->data->s_print);
 	printf("%u %ld is eating\n", \

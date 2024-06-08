@@ -13,6 +13,7 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <signal.h>
 
 # define S_FORKS "forks"
 # define S_FORK "fork"

@@ -4,6 +4,8 @@ void	print_fork(t_list *philo)
 {
 	useconds_t		current_time;
 
+	if (is_finish(philo) == true)
+		return ;
 	current_time = get_time(philo->data->time);
 	sem_wait(philo->data->s_print);
 	printf("%u %ld has taken a fork\n", \
@@ -15,6 +17,8 @@ void	print_think(t_list *philo)
 {
 	useconds_t		current_time;
 
+	if (is_finish(philo) == true)
+		return ;
 	current_time = get_time(philo->data->time);
 	sem_wait(philo->data->s_print);
 	printf("%u %ld is thinking\n", \
@@ -31,11 +35,10 @@ void	*take_fork(void *arg)
 	sem_wait(philo->data->s_forks);
 	// if (is_finish(philo) == true)
 	// 	exit(0);
-	print_fork(philo);
-	sem_wait(philo->data->s_forks);
-	// if (is_finish(philo) == true)
-	// 	exit(0);
-	print_fork(philo);
+	// sem_wait(philo->data->s_forks);
+	// // if (is_finish(philo) == true)
+	// // 	exit(0);
+	// print_fork(philo);
 	sem_wait(philo->s_fork);
 	philo->fork_taken = true;
 	sem_post(philo->s_fork);
@@ -62,9 +65,17 @@ void	take_forks_or_think(t_list *philo)
 	while (fork_is_taken(philo) == false && is_finish(philo) == false)
 		if (philo->think == false)
 			print_think(philo);
-	philo->fork_taken = false;
 	if (pthread_join(philo->th_fork, NULL) != 0)
 		exit(1);
+	print_fork(philo);
+	if (pthread_create(&philo->th_fork, NULL, &take_fork, philo) != 0)
+		exit(1);
+	while (fork_is_taken(philo) == false && is_finish(philo) == false)
+		if (philo->think == false)
+			print_think(philo);
+	if (pthread_join(philo->th_fork, NULL) != 0)
+		exit(1);
+	philo->fork_taken = false;
 	// if (is_finish(philo) == true)
 	// 	return (0);
 	// if (pthread_create(&philo->th_fork, NULL, &take_fork, philo) != 0)
