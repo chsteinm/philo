@@ -60,7 +60,7 @@ void	routine(t_data *data, t_list *philo)
 		{
 			sem_post(data->s_finish);
 			// exit(0);
-			return (free_and_destroy(data, &philo), exit(0));
+			break ;
 		}
 		print_sleep(philo);
 	}
@@ -74,12 +74,14 @@ void	*wait_finish(void *arg)
 	t_data	*data;
 
 	data = (t_data *)arg;
-	i = 0;
-	while (i++ < data->nb_of_philo)
+	i = -1;
+	while (++i < data->nb_of_philo)
 	{
 		sem_wait(data->s_finish);
 	}
-	sem_post(data->s_dead);
+	i = -1;
+	while (++i < data->nb_of_philo)
+		sem_post(data->s_dead);
 	return (NULL);
 }
 
