@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lst_funcs_bonus.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrstein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/08 05:22:39 by chrstein          #+#    #+#             */
+/*   Updated: 2024/06/08 05:22:41 by chrstein         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 t_list	*ft_lstnew(t_data *data, long philo_nb)
@@ -55,6 +67,11 @@ void	ft_lstclear(t_list **lst)
 		{
 			sem_close((*lst)->s_is_dead);
 			sem_unlink(S_IS_DEAD);
+		}
+		if ((*lst)->s_fork_to_destroy)
+		{
+			sem_close((*lst)->s_fork);
+			sem_unlink(S_FORK);
 		}
 		free(*lst);
 		*lst = tmp;

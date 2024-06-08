@@ -2,4 +2,8 @@
 /philo/out
 /philo/philo
 /philo/Lazy*
+/philo_bonus/.build
+/philo_bonus/out
+/philo_bonus/philo_bonus
+/philo_bonus/Lazy*
 .vscode

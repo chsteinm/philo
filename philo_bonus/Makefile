@@ -1,14 +1,17 @@
 NAME = philo_bonus
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread -g3 #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -pthread #-g3 #-fsanitize=address
 SRCS = 	main_bonus.c \
 		ft_strtol_utils.c \
 		ft_strtol.c \
 		ft_lst_funcs_bonus.c \
-		init_bonus.c \
+		init_data_bonus.c \
+		init_sem_philo_bonus.c \
+		wait_bonus.c \
 		utils_bonus.c \
 		eat_sleep_bonus.c \
-		take_fork_bonus.c
+		take_fork_bonus.c \
+		free_destroy_bonus.c
 OBJ = $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
 BUILD_DIR = .build
 

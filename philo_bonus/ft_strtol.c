@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtol.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/08 05:22:50 by chrstein          #+#    #+#             */
+/*   Updated: 2024/06/08 05:28:01 by chrstein         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 static bool	check_base(char *str, char **endptr, int base)
@@ -54,7 +66,7 @@ long	ft_strtol(char *str, char **endptr, int base)
 		else if (base > 10 && ft_isalpha(*str) && *str <= 'a' + base - 11)
 			result = result * base + (*str - 'a' + 10);
 		else
-			break;
+			break ;
 		if (result < 0 && result > LONG_MIN)
 			return (error(str, endptr, sign));
 		str++;

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_data_bonus.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/08 05:23:06 by chrstein          #+#    #+#             */
+/*   Updated: 2024/06/08 05:28:26 by chrstein         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
-useconds_t	init_time()
+useconds_t	init_time(void)
 {
 	struct timeval	time;
 
@@ -8,7 +20,7 @@ useconds_t	init_time()
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-int	init_pids_and_forks(t_data *data)
+int	init_pids(t_data *data)
 {
 	data->pid_philo = malloc(data->nb_of_philo * sizeof(pid_t));
 	if (!data->pid_philo)
@@ -42,43 +54,5 @@ int	init_data(t_data *data, char **argv)
 			return (EXIT_FAILURE);
 	}
 	data->time = init_time();
-	return (init_pids_and_forks(data));
-}
-
-int	init_sem(t_data *data)
-{
-	data->s_forks = sem_open(S_FORKS, O_CREAT, 0700, data->nb_of_philo);
-	if (data->s_forks == SEM_FAILED)
-		return (EXIT_FAILURE);
-	data->s_forks_to_destroy = true;
-	data->s_dead = sem_open(S_DEAD, O_CREAT, 0700, 0);
-	if (data->s_dead == SEM_FAILED)
-		return (EXIT_FAILURE);
-	data->s_dead_to_destroy = true;
-	data->s_print = sem_open(S_PRINT, O_CREAT, 0700, 1);
-	if (data->s_print == SEM_FAILED)
-		return (EXIT_FAILURE);
-	data->s_print_to_destroy = true;
-	data->s_start = sem_open(S_START, O_CREAT, 0700, 0);
-	if (data->s_start == SEM_FAILED)
-		return (EXIT_FAILURE);
-	data->s_start_to_destroy = true;
-	return (EXIT_SUCCESS);
-}
-
-int	init_philo(t_data *data, t_list **philo)
-{
-	long	i;
-	t_list	*new;
-
-	*philo = NULL;
-	i = 0;
-	while (++i <= data->nb_of_philo)
-	{
-		new = ft_lstnew(data, i);
-		if (!new)
-			return (EXIT_FAILURE);
-		ft_lstadd_back(philo, new);
-	}
-	return (EXIT_SUCCESS);
+	return (init_pids(data));
 }
