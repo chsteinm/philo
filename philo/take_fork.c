@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   take_fork.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/14 12:29:16 by chrstein          #+#    #+#             */
+/*   Updated: 2024/06/14 12:31:03 by chrstein         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 bool	fork_is_taken(t_list *philo, bool left)
 {
 	bool	ret;
+
 	if (left)
 	{
 		pthread_mutex_lock(philo->left_fork);

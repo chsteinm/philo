@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/14 12:28:43 by chrstein          #+#    #+#             */
+/*   Updated: 2024/06/14 12:30:40 by chrstein         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -48,24 +60,24 @@ typedef struct s_list
 	struct s_list	*prev;
 }	t_list;
 
-void	ft_skip_wspaces(char **ptr);
-int		ft_isdigit(int c);
-int		ft_isalpha(int c);
-long	ft_strtol(char *str, char **endptr, int base);
-t_list	*ft_lstnew(t_data *data, long philo_nb);
-void	ft_lstclear(t_list **lst);
-void	ft_lstadd_back(t_list **lst, t_list *new);
+void		ft_skip_wspaces(char **ptr);
+int			ft_isdigit(int c);
+int			ft_isalpha(int c);
+long		ft_strtol(char *str, char **endptr, int base);
+t_list		*ft_lstnew(t_data *data, long philo_nb);
+void		ft_lstclear(t_list **lst);
+void		ft_lstadd_back(t_list **lst, t_list *new);
 
 int			init_data(t_data *data, char **argv);
 int			init_mutex(t_data *data);
 int			init_philo(t_data *data, t_list **philo);
-useconds_t	init_time();
+useconds_t	init_time(void);
 
-void	take_right_fork_or_think(t_list *philo);
-void	take_left_fork_or_think(t_list *philo);
-void	print_and_think(t_list *philo);
-void	print_and_sleep(t_list *philo);
-void	print_and_eat(t_list *philo);
+void		take_right_fork_or_think(t_list *philo);
+void		take_left_fork_or_think(t_list *philo);
+void		print_and_think(t_list *philo);
+void		print_and_sleep(t_list *philo);
+void		print_and_eat(t_list *philo);
 
 useconds_t	get_time(useconds_t start);
 bool		is_finish(t_list *philo);

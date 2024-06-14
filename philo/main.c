@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/14 12:29:31 by chrstein          #+#    #+#             */
+/*   Updated: 2024/06/14 12:31:43 by chrstein         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	free_and_destroy(t_data *data, t_list **philo)
 {
 	while (data->nb_of_philo--)
-		pthread_join(data->th[data->nb_of_philo], NULL); // secu les join ?
+		pthread_join(data->th[data->nb_of_philo], NULL);
 	free(data->th);
 	ft_lstclear(philo);
 	while (data->i--)
@@ -15,7 +27,8 @@ void	free_and_destroy(t_data *data, t_list **philo)
 	if (data->m_print_to_destroy == true)
 		pthread_mutex_destroy(&data->m_print);
 	if (data->m_start_to_destroy == true)
-		pthread_mutex_destroy(&data->m_start);}
+		pthread_mutex_destroy(&data->m_start);
+}
 
 void	wait_n_desync(t_list *philo)
 {
@@ -81,7 +94,6 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (init_data(&data, argv) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
-	//printf("nb philo = %ld\ntime to die = %ld\ntime to eat = %ld\ntime to sleep = %ld\nnb time must eat = %ld\n", data.nb_of_philo, data.time_to_die, data.time_to_eat, data.time_to_sleep, data.nb_of_time_philo_eat);
 	if (init_mutex(&data) || init_philo(&data, &philo) != EXIT_SUCCESS)
 		return (free_and_destroy(&data, &philo), EXIT_FAILURE);
 	data.th = malloc(data.nb_of_philo * sizeof(pthread_t));

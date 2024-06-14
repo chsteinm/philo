@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/14 12:28:35 by chrstein          #+#    #+#             */
+/*   Updated: 2024/06/14 12:30:07 by chrstein         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-useconds_t	init_time()
+useconds_t	init_time(void)
 {
 	struct timeval	time;
 
@@ -57,13 +69,13 @@ int	init_mutex(t_data *data)
 			return (EXIT_FAILURE);
 	}
 	if (pthread_mutex_init(&data->m_dead, NULL) != 0)
-			return (EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	data->m_dead_to_destroy = true;
 	if (pthread_mutex_init(&data->m_print, NULL) != 0)
-			return (EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	data->m_print_to_destroy = true;
 	if (pthread_mutex_init(&data->m_start, NULL) != 0)
-			return (EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	data->m_start_to_destroy = true;
 	return (EXIT_SUCCESS);
 }
