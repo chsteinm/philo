@@ -6,7 +6,7 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 05:23:41 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/08 05:29:26 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/14 13:36:47 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	print_fork(t_list *philo)
 {
 	useconds_t		current_time;
 
-	if (is_finish(philo) == true)
-		return ;
 	current_time = get_time(philo->data->time);
 	sem_wait(philo->data->s_print);
 	printf("%u %ld has taken a fork\n", \
@@ -71,7 +69,10 @@ void	take_forks_or_think(t_list *philo)
 			print_think(philo);
 	if (pthread_join(philo->th_fork, NULL) != 0)
 		exit(1);
+	if (is_finish(philo) == true)
+		return ;
 	print_fork(philo);
+	philo->fork_taken = false;
 	if (pthread_create(&philo->th_fork, NULL, &take_fork, philo) != 0)
 		exit(1);
 	while (fork_is_taken(philo) == false && is_finish(philo) == false)
@@ -79,5 +80,8 @@ void	take_forks_or_think(t_list *philo)
 			print_think(philo);
 	if (pthread_join(philo->th_fork, NULL) != 0)
 		exit(1);
+	if (is_finish(philo) == true)
+		return ;
+	print_fork(philo);
 	philo->fork_taken = false;
 }

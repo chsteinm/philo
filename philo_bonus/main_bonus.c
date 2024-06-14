@@ -6,7 +6,7 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 05:23:30 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/08 05:29:15 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/14 14:26:56 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	routine(t_data *data, t_list *philo)
 	{
 		philo->think = false;
 		take_forks_or_think(philo);
-		print_eat(philo);
 		philo->die_at = get_time(philo->data->time) + philo->data->time_to_die;
+		print_eat(philo);
 		if (philo->data->nb_of_time_philo_eat && --philo->nb_of_eat == 0)
 		{
 			sem_post(data->s_finish);
@@ -42,6 +42,7 @@ int	finish_lauch(t_data *data)
 	if (pthread_create(&data->th_finish, NULL, &wait_finish, data) != 0)
 		return (EXIT_FAILURE);
 	sem_wait(data->s_dead);
+	sem_post(data->s_dead);
 	i = -1;
 	while (++i < data->nb_of_philo)
 		sem_post(data->s_forks);

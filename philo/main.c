@@ -6,7 +6,7 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:29:31 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/14 12:31:43 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/14 13:21:45 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ void	free_and_destroy(t_data *data, t_list **philo)
 void	wait_n_desync(t_list *philo)
 {
 	pthread_mutex_lock(&philo->data->m_start);
+	ft_usleep(1);
 	pthread_mutex_unlock(&philo->data->m_start);
 	if (!(philo->philo_nb % 2))
-		ft_usleep(10);
+		ft_usleep(5);
 }
 
 void	*routine(void *arg)
@@ -58,8 +59,8 @@ void	*routine(void *arg)
 			take_left_fork_or_think(philo);
 			take_right_fork_or_think(philo);
 		}
-		print_and_eat(philo);
 		philo->die_at = get_time(philo->data->time) + philo->data->time_to_die;
+		print_and_eat(philo);
 		print_and_sleep(philo);
 	}
 	return (NULL);

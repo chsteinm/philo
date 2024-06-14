@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_destroy_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrstein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 05:22:28 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/08 05:22:32 by chrstein         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:23:42 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-include "philo_bonus.h"
+#include "philo_bonus.h"
 
 void	close_unset(t_data *data)
 {

@@ -1,4 +1,4 @@
-NAME = philo_bonus
+NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread #-g3 -fsanitize=thread
 SRCS = main.c ft_strtol_utils.c ft_lst_funcs.c ft_strtol.c init.c print_and.c take_fork.c utils.c
