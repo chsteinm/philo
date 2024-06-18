@@ -6,7 +6,7 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:29:31 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/14 13:21:45 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/18 15:21:22 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	free_and_destroy(t_data *data, t_list **philo)
 	free(data->forks);
 	if (data->m_dead_to_destroy == true)
 		pthread_mutex_destroy(&data->m_dead);
+	if (data->m_finish_to_destroy == true)
+		pthread_mutex_destroy(&data->m_finish);
 	if (data->m_print_to_destroy == true)
 		pthread_mutex_destroy(&data->m_print);
 	if (data->m_start_to_destroy == true)

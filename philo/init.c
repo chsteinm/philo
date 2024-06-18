@@ -6,7 +6,7 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:28:35 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/14 12:30:07 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/18 15:20:55 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ int	init_mutex(t_data *data)
 	if (pthread_mutex_init(&data->m_dead, NULL) != 0)
 		return (EXIT_FAILURE);
 	data->m_dead_to_destroy = true;
+	if (pthread_mutex_init(&data->m_finish, NULL) != 0)
+		return (EXIT_FAILURE);
+	data->m_finish_to_destroy = true;
 	if (pthread_mutex_init(&data->m_print, NULL) != 0)
 		return (EXIT_FAILURE);
 	data->m_print_to_destroy = true;

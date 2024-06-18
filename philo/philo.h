@@ -6,7 +6,7 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:28:43 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/14 12:30:40 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/18 15:20:21 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_data
 	bool			m_start_to_destroy;
 	pthread_mutex_t	m_print;
 	bool			m_print_to_destroy;
+	pthread_mutex_t	m_finish;
+	bool			m_finish_to_destroy;
 	pthread_t		*th;
 	useconds_t		time;
 	long			i;

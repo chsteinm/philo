@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chrstein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:29:22 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/14 12:29:23 by chrstein         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:27:23 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	is_finish(t_list *philo)
 {
 	useconds_t		current_time;
 
-	if (is_dead(philo) || philo->finish_eating)
+	if (is_dead(philo))
 		return (true);
 	current_time = get_time(philo->data->time);
 	if (current_time >= philo->die_at)

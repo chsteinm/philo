@@ -6,7 +6,7 @@
 /*   By: chrstein <chrstein@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 05:23:30 by chrstein          #+#    #+#             */
-/*   Updated: 2024/06/14 14:26:56 by chrstein         ###   ########lyon.fr   */
+/*   Updated: 2024/06/18 15:16:19 by chrstein         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	routine(t_data *data, t_list *philo)
 		if (philo->data->nb_of_time_philo_eat && --philo->nb_of_eat == 0)
 		{
 			sem_post(data->s_finish);
-			break ;
 		}
 		print_sleep(philo);
 	}
